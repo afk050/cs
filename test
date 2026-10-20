@@ -1,0 +1,19 @@
+
+seats = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+#cur.execute("SELECT seat_no FROM bookings")
+booked_seats = ["A1", "B2", "C3"]  # Example of booked seats, replace with actual query results
+
+for seat in seats:
+        for i in range(1, 11):
+                seat_no = seat + str(i)
+                if seat_no not in booked_seats:
+                        print(seat_no, end='      ')
+                else:
+                        print('X ', end='      ')
+        print()
+print("---------------------------------------------------------------------------------------")
+print("ALL EYES THIS WAY".center(80))
+
+a=input("Please Enter The Seat Number You Want To Book:")
+if a[0]=="A":
+    print("You Have Chosen A Recliner Seat, The Price For This Seat Is 500/-")
