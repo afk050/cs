@@ -1,6 +1,7 @@
 import SQLfile
 import mysql.connector as m
 SQLfile.createtable()
+SQLfile.preset()
 def addrec():
     try:
         con=m.connect(host="localhost",user="root",passwd="1234",database="MOVIES")
@@ -14,13 +15,19 @@ def addrec():
 
 
         print("Great Pick,This Show Is Airing On The Following Days ~~")
-        print('3 June 2026','4 June 2026','6 June 2026','7 June 2026','9 June 2026','11 June 2026',sep='\n')
-        show_date=input('Please Enter The Date Suitable For You [DD-MM-YYYY] :')
+        cur.execute("SELECT DISTINCT show_date FROM shows")
+        d_date = [d[0] for d in cur.fetchall()]
+        for date in d_date:
+            print(date)
+        show_date=input('Please Enter The Date Suitable For You [YYYY-MM-DD] :')
         
         
         print("The Timings Available for the chosen day are :")
-        print('08:00 AM','12:00 PM','04:00 PM','07:00 PM','10:30 PM',sep='\t')
-        show_time=input('Please enter the time best suited for you[HH:MM AM/PM]:')
+        cur.execute("SELECT show_time FROM shows WHERE show_date='{0}'".format(show_date))
+        d_times = [t[0] for t in cur.fetchall()]
+        for time in d_times:
+            print(time)
+        show_time=input('Please enter the time best suited for you[HH:MM]:')
         
         
         print("The date and time are all set!, Let's get you a seat immediately now...")
