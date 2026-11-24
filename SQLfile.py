@@ -3,7 +3,7 @@ def createdatabase():
     try:
         con=m.connect(host="localhost",user="root",passwd="1234")
         cur=con.cursor()
-        cur.execute("create database if not exists MOVIES")
+        cur.execute("create database if not exists MOVIE_BOOKINGS")
     except m.Error:
         print("Connection Error")
     finally:
@@ -11,7 +11,7 @@ def createdatabase():
 def createtable():
     try:
         createdatabase()
-        con=m.connect(host="localhost",user="root",passwd="1234",database="MOVIES")
+        con=m.connect(host="localhost",user="root",passwd="1234",database="MOVIE_BOOKINGS")
         cur=con.cursor()
         cur.execute("create table if not exists movies(movie_id int auto_increment primary key ,movie_name varchar(30) not null unique)")
         cur.execute("create table if not exists shows(show_id int auto_increment primary key ,movie_id int not null,show_date date not null,show_time time not null,foreign key(movie_id) references movies(movie_id), unique key unique_show(movie_id,show_date,show_time))")
@@ -22,14 +22,14 @@ def createtable():
         con.close()
 def preset():
     try:
-        con=m.connect(host="localhost",user="root",passwd="1234",database="MOVIES")
+        con=m.connect(host="localhost",user="root",passwd="1234",database="MOVIE_BOOKINGS")
         cur=con.cursor()
-        cur.execute("INSERT ignore INTO movies (movie_name) VALUES ('Avengers: Endgame'),('colony'),('The Dark Knight'),('Inception'),('Interstellar')")
+        cur.execute("INSERT ignore INTO movies (movie_name) VALUES ('Avengers: Endgame'),('colony'),('Inception'),('Interstellar')")
         con.commit()
-        timings=['10:00','13:00','16:00','19:00','22:00']
+        timings=['10:00','16:00','19:00','22:00']
         date='2026-10-'
-        for i in range(1, 6):
-            for movie in ['Avengers: Endgame','colony','The Dark Knight','Inception','Interstellar']:
+        for i in range(1, 4):
+            for movie in ['Avengers: Endgame','colony','Inception','Interstellar']:
                 cur.execute("SELECT movie_id FROM movies WHERE movie_name='{0}'".format(movie))
                 movie_id= cur.fetchone()[0]
                 newdate=date+str(i)
